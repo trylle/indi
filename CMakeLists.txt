@@ -298,6 +298,7 @@ find_package(USB1 REQUIRED)
 find_package(CURL REQUIRED)
 find_package(GSL REQUIRED)
 find_package(JPEG REQUIRED)
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 # Math Library
 FIND_LIBRARY(M_LIB m)
 # 2. Includes
@@ -724,7 +725,7 @@ install(TARGETS indi_paramount_telescope RUNTIME DESTINATION bin)
 
 #################################################################################
 
-########### Syncscan ###############
+########### Synscan ###############
 SET(synscan_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/drivers/telescope/synscandriver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/drivers/telescope/synscanmount.cpp)
@@ -734,7 +735,7 @@ target_link_libraries(indi_synscan_telescope indidriver AlignmentDriver)
 
 install(TARGETS indi_synscan_telescope RUNTIME DESTINATION bin)
 
-########### Syncscan Legacy ###############
+########### Synscan Legacy ###############
 SET(synscanlegacy_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/drivers/telescope/synscandriverlegacy.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/drivers/telescope/synscanmountlegacy.cpp)
@@ -743,6 +744,16 @@ add_executable(indi_synscanlegacy_telescope ${synscanlegacy_SRC})
 target_link_libraries(indi_synscanlegacy_telescope indidriver AlignmentDriver)
 
 install(TARGETS indi_synscanlegacy_telescope RUNTIME DESTINATION bin)
+
+########### Synscan Soft ###############
+SET(synscansoft_SRC
+    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/telescope/synscandriversoft.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/drivers/telescope/synscanmountsoft.cpp)
+
+add_executable(indi_synscansoft_telescope ${synscansoft_SRC})
+target_link_libraries(indi_synscansoft_telescope indidriver AlignmentDriver Eigen3::Eigen)
+
+install(TARGETS indi_synscansoft_telescope RUNTIME DESTINATION bin)
 
 
 ########### Sky Commander ###############

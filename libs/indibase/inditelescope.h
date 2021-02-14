@@ -625,7 +625,7 @@ class Telescope : public DefaultDevice
         bool callHandshake();
 
         // Joystick
-        void processNSWE(double mag, double angle);
+        virtual void processNSWE(double mag, double angle);
         void processJoystick(const char *joystick_n, double mag, double angle);
         void processAxis(const char *axis_n, double value);
         void processSlewPresets(double mag, double angle);

@@ -1605,6 +1605,20 @@ void get_alt_az_coordinates(double Ha, double Dec, double Lat, double* Alt, doub
     *Az = az;
 }
 
+void get_ha_dec_coordinates(double Alt, double Az, double Lat, double *Ha,
+                            double *Dec) {
+  double ha, dec;
+  Alt *= M_PI / 180.0;
+  Az *= M_PI / 180.0;
+  Lat *= M_PI / 180.0;
+  dec = asin(sin(Lat) * sin(Alt) + cos(Lat) * cos(Alt) * cos(Az));
+  ha = acos((cos(Lat) * sin(Alt) - sin(Lat) * cos(Alt) * cos(Az)) / cos(dec));
+  dec *= 180.0 / M_PI;
+  ha *= 180.0 / M_PI;
+  *Dec = dec;
+  *Ha = ha;
+}
+
 double estimate_geocentric_elevation(double Lat, double El)
 {
     Lat *= M_PI / 180.0;
